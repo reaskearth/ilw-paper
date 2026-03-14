@@ -2,38 +2,43 @@ name: ilwpaper
 channels:
   - conda-forge
 dependencies:
-  - aiohttp>=3
-  - altair>=5
-  - blas>=2
-  - bottleneck>=1
-  - cartopy>=0.23
-  - colorcet>=3
-  - cvxpy>=1
-  - dask>=2024
-  - geopandas>=0.14
-  - h5netcdf>=1
-  - ipykernel>=6
-  - jupyterlab>=4
-  - libgdal-arrow-parquet>=3
-  - matplotlib>=3
-  - numpy>=2
-  - pandas>=2
-  - pint>=0.24
-  - pip>=24
-  - polars>=1.29
-  - pre-commit>=3
-  - pyarrow>=17
-  - pyogrio>=0.11
-  - pyscipopt>=5
-  - python>=3.12
-  - R
-  - ruff>=0.5
-  - semver>=3
-  - scikit-learn>=1
-  - scipy>=1
-  - xarray>=2024
-  - zarr>=2
+  - aiohttp=3.13.3
+  - altair=6.0.0
+  - blas=2.305
+  - bottleneck=1.6.0
+  - cartopy=0.25.0
+  - colorcet=3.1.0
+  - cvxpy=1.7.5
+  - dask=2026.1.2
+  - geopandas=1.1.3
+  - h5netcdf=1.8.1
+  - libgdal-arrow-parquet=3.12.2
+  - matplotlib=3.10.8
+  - numpy=2.4.2
+  - pandas=3.0.1
+  - pint=0.25.2
+  - pip=26.0.1
+  - polars=1.38.1
+  - pyarrow=23.0.1
+  - pyogrio=0.12.1
+  - pyscipopt=6.1.0
+  - python=3.14.3
+  - semver=3.0.4
+  - scikit-learn=1.8.0
+  - scipy=1.17.1
+  - xarray=2026.2.0
+  - zarr=3.1.5
+  - r=4.4
+  - r-arrow=23.0.1
+  - r-data.table=1.17.8
+  - r-fields=17.1
+  - r-ggpattern=1.3.1
+  - r-ggplot2=4.0.2
+  - r-matrix=1.7_4
+  - r-quadprog=1.5_8
+  - r-stringr=1.6.0
+
   - pip:
-    - polars-st>=0.3
+    - polars-st==0.6.1
     - --extra-index-url https://pypi.reask.earth
     - pylt==0.30.11
