@@ -1,0 +1,39 @@
+name: ilwpaper
+channels:
+  - conda-forge
+dependencies:
+  - aiohttp>=3
+  - altair>=5
+  - blas>=2
+  - bottleneck>=1
+  - cartopy>=0.23
+  - colorcet>=3
+  - cvxpy>=1
+  - dask>=2024
+  - geopandas>=0.14
+  - h5netcdf>=1
+  - ipykernel>=6
+  - jupyterlab>=4
+  - libgdal-arrow-parquet>=3
+  - matplotlib>=3
+  - numpy>=2
+  - pandas>=2
+  - pint>=0.24
+  - pip>=24
+  - polars>=1.29
+  - pre-commit>=3
+  - pyarrow>=17
+  - pyogrio>=0.11
+  - pyscipopt>=5
+  - python>=3.12
+  - R
+  - ruff>=0.5
+  - semver>=3
+  - scikit-learn>=1
+  - scipy>=1
+  - xarray>=2024
+  - zarr>=2
+  - pip:
+    - polars-st>=0.3
+    - --extra-index-url https://pypi.reask.earth
+    - pylt==0.30.11
