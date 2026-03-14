@@ -21,16 +21,17 @@ yend=years[length(years)]
 
 # IO PATHS
 path_project="./" # set project path if needed
-path_verisk=paste0(path_project,"Data/Restricted_Data/ylt_Verisk_",catalog,"_cat.csv")
-path_reask=paste0(path_project,"CBRA/Output/","STD","_",baseline,"_",forecast,"/")
-path_pcs=paste0(path_project,"Data/Restricted_Data/PCS_RegionalSplit.csv")
-path_landfall=paste0(path_project,"Data/Landfall.csv")
-path_index=paste0(path_project,"Data/IndexationFactors.csv")
-path_verisk_split=paste0(path_project,"Data/Restricted_Data/Verisk_",catalog,"_RegionalSplit.csv")
-path_ilw=paste0(path_project,"Data/ILW_prices.csv")
-path_climate=paste0(path_project,"Data/Reask_ClimateIndices.parquet")
-path_out=paste0(path_project,"Output/Figures_",yini,"-",yend,"/",catalog,"/",forecast,"/")
-path_save=paste0(path_project,"Output/",baseline,"_",yini,"-",yend,"_",catalog,"_",forecast,".RData")
+path_verisk=paste0(path_project,"../DATA/RESTRICTED/Verisk_",catalog,"_YLT.csv")
+path_reask=paste0(path_project,"../DATA/CBRA_YLT/","STD","_",baseline,"_",forecast,"/")
+path_pcs=paste0(path_project,"../DATA/RESTRICTED/PCS_RegionalSplit.csv")
+path_verisk_split=paste0(path_project,"../DATA/RESTRICTED/Verisk_",catalog,"_RegionalSplit.csv")
+path_ilw=paste0(path_project,"../DATA/ILW_prices.csv")
+path_climate=paste0(path_project,"../DATA/Reask_ClimateIndices.parquet")
+path_landfall=paste0(path_project,"../DATA/Landfall.csv")
+path_index=paste0(path_project,"../DATA/IndexationFactors.csv")
+
+path_out=paste0(path_project,"../OUTPUT/Figures_",yini,"-",yend,"/",catalog,"/",forecast,"/")
+path_save=paste0(path_project,"../OUTPUT/",baseline,"_",yini,"-",yend,"_",catalog,"_",forecast,".RData")
 if (!dir.exists(path_out)) dir.create(path_out,recursive=T)
 
 # FUNCTIONS
