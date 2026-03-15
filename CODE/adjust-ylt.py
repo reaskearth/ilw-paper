@@ -43,7 +43,6 @@ for y in range(1985, 2025):
             intensity_units="category",
             save_dir=sdir,
         )
-        break
     except:
         print("Error in YLT resampling")
         raise
