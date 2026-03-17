@@ -20,17 +20,19 @@ yini=years[1]
 yend=years[length(years)]
 
 # IO PATHS
-path_project="./" # set project path if needed
-path_verisk=paste0(path_project,"Data/Restricted_Data/ylt_Verisk_",catalog,"_cat.csv")
-path_reask=paste0(path_project,"CBRA/Output/","STD","_",baseline,"_",forecast,"/")
-path_pcs=paste0(path_project,"Data/Restricted_Data/PCS_RegionalSplit.csv")
-path_landfall=paste0(path_project,"Data/Landfall.csv")
-path_index=paste0(path_project,"Data/IndexationFactors.csv")
-path_verisk_split=paste0(path_project,"Data/Restricted_Data/Verisk_",catalog,"_RegionalSplit.csv")
-path_ilw=paste0(path_project,"Data/ILW_prices.csv")
-path_climate=paste0(path_project,"Data/Reask_ClimateIndices.parquet")
-path_out=paste0(path_project,"Output/Figures_",yini,"-",yend,"/",catalog,"/",forecast,"/")
-path_save=paste0(path_project,"Output/",baseline,"_",yini,"-",yend,"_",catalog,"_",forecast,".RData")
+path_project="../" # set project path if needed
+path_verisk=paste0(path_project,"DATA/RESTRICTED/Verisk_",catalog,"_YLT.csv")
+path_reask=paste0(path_project,"DATA/CBRA_YLT/","STD","_",baseline,"_",forecast,"/")
+path_mapping=paste0(path_project,"DATA/RESTRICTED/event-mapping.csv")
+path_pcs=paste0(path_project,"DATA/RESTRICTED/PCS_regional-split.csv")
+path_verisk_split=paste0(path_project,"DATA/RESTRICTED/Verisk_",catalog,"_regional-split.csv")
+path_ilw=paste0(path_project,"DATA/ILW-prices.csv")
+path_climate=paste0(path_project,"DATA/Reask_climate-indices.parquet")
+path_landfall=paste0(path_project,"DATA/landfall.csv")
+path_index=paste0(path_project,"DATA/indexation-factors.csv")
+
+path_out=paste0(path_project,"OUTPUT/Figures_",yini,"-",yend,"/",catalog,"/",forecast,"/")
+path_save=paste0(path_project,"OUTPUT/",baseline,"_",yini,"-",yend,"_",catalog,"_",forecast,".RData")
 if (!dir.exists(path_out)) dir.create(path_out,recursive=T)
 
 # FUNCTIONS
@@ -256,9 +258,12 @@ verisk_stat=verisk_agg[,.(q1Freq=quantile(Freq,0.1),q25Freq=quantile(Freq,0.25),
                       meanLoss=sum(Loss)/10000,meanFreq=sum(Freq)/10000,meanLossSe=sum(LossSe)/10000, meanLossNe=sum(LossNe)/10000,
                       stdLoss=sd(Loss),stdFreq=sd(Freq),stdLossSe=sd(LossSe),stdLossNe=sd(LossNe))]
 
+# READ VERISK-REASK EVENT MAPPING FILE
+mapping=fread(path_mapping)
+
 # READ REASK YLT FOR ALL HISTORICAL YEARS, APPLY REGIONAL SPLIT, AGGREGATE ANNUALLY, FILL-IN MISSING YEARS, CALCULATE RETURN PERIODS 
 reask=rbindlist(lapply(years,read_bulk_ylt,path_reask))
-reask[,event_id:=as.integer(str_replace_all(event_id,"reask_",""))]
+reask=mapping[reask,on="reask_event_id"][,.(Year,sample,event_id,loss)]
 reask_occ=verisk_split[reask,on="event_id"]
 reask_occ=reask_occ[,.(Year,
                        Sample=sample,
@@ -327,8 +332,8 @@ pcs_occ=pcs[,.(Year,EventName,Landfall,Loss=IndexedLoss/1e9,LossNe=IndexedLoss*P
 
 # READ CLIMATE INDICES
 climate=data.table(read_parquet(path_climate))
-climate=climate[init_timing=="MIDJUNE",.(ONI=mean(SST_NINO34_ONI),RONI=mean(SST_NINO34_RONI),AMM=mean(SST_AMM)),by="season"]
-climate=climate[season>=1985 & season<=2024,.(Year=season,ONI,RONI,AMM)]
+climate=climate[init_timing=="MIDJUNE",.(RONI=mean(SST_NINO34_RONI),AMM=mean(SST_AMM)),by="season"]
+climate=climate[season>=1985 & season<=2024,.(Year=season,RONI,AMM)]
 
 # AGGREGATE PCS LOSSES ANNUALY AND FILL-IN MISSING YEARS
 pcs_agg=pcs_occ[,.(Freq=.N,
