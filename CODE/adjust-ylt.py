@@ -8,14 +8,14 @@ from pylt import adjust_ylt
 FCT_TIMING = "MIDJUNE"
 
 # change this to the correct path to your data
-proj_dir = Path("/Users/ianbolliger/git-repos/ilw-paper")
+proj_dir = Path("../")
 
 data_dir = proj_dir / "DATA"
 restricted_dir = data_dir / "RESTRICTED"
-INPUT_YLT_PATH = restricted_dir / "ylt_Verisk_STD_cat.csv"
+INPUT_YLT_PATH = restricted_dir / "Verisk_STD_YLT.csv"
 
 COUNTS_PATH = restricted_dir / "Reask_landfall-data.parquet"
-METRICS_PATH = data_dir / "Reask_ClimateIndices.parquet"
+METRICS_PATH = data_dir / "Reask_climate-indices.parquet"
 GATES_PATH = data_dir / "Reask_gates.parquet"
 SMOOTHING_MAP_PATH = data_dir / "Reask_smoothing-mapper.parquet"
 
