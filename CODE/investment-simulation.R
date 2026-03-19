@@ -258,12 +258,14 @@ verisk_stat=verisk_agg[,.(q1Freq=quantile(Freq,0.1),q25Freq=quantile(Freq,0.25),
                       meanLoss=sum(Loss)/10000,meanFreq=sum(Freq)/10000,meanLossSe=sum(LossSe)/10000, meanLossNe=sum(LossNe)/10000,
                       stdLoss=sd(Loss),stdFreq=sd(Freq),stdLossSe=sd(LossSe),stdLossNe=sd(LossNe))]
 
-# READ VERISK-REASK EVENT MAPPING FILE
-mapping=fread(path_mapping)
-
 # READ REASK YLT FOR ALL HISTORICAL YEARS, APPLY REGIONAL SPLIT, AGGREGATE ANNUALLY, FILL-IN MISSING YEARS, CALCULATE RETURN PERIODS 
 reask=rbindlist(lapply(years,read_bulk_ylt,path_reask))
-reask=mapping[reask,on="reask_event_id"][,.(Year,sample,event_id,loss)]
+if ("event_id" %in% names(reask)) {
+  reask[,event_id:=as.integer(str_replace_all(event_id,"reask_",""))]
+} else {
+  mapping=fread(path_mapping)
+  reask=mapping[reask,on="reask_event_id"][,.(Year,sample,event_id,loss)]
+}
 reask_occ=verisk_split[reask,on="event_id"]
 reask_occ=reask_occ[,.(Year,
                        Sample=sample,
